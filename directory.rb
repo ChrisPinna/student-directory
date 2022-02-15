@@ -1,32 +1,18 @@
 #let's put all the students into an array
-students = [
-  { :name => "Dr. Hannibal Lecter", :cohort => :november},
-  { :name => "Darth Vader", :cohort => :november},
-  { :name => "Nurse Ratched", :cohort => :november},
-  { :name => "Michael Corleone", :cohort => :november},
-  { :name => "Axel DeLarge", :cohort => :november},
-  { :name => "The Wicked Wich of the West", :chohort => :november},
-  { :name => "Terminator", :cohort => :november},
-  { :name => "Freaddy Kruger", :cohort => :november},
-  { :name => "The Joker", :cohort => :november},
-  { :name => "Joffrey Baratheon", :cohort => :november},
-  { :name => "Norman Bates", :cohort => :november},
-]
-
-def input_students
+def input_students(students)
   puts "Please enter the name of the student"
   puts "To finish, just hit return twice"
   # create an empty array
-  students = []
+  #students = []
   # get the first name
-  name = gets.chomp
+  name = gets.chomp.capitalize
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
     students << { :name => name, :cohort => :november }
     puts "Now we have #{students.count} students"
     # get another name from the user
-    name = gets.chomp
+    name = gets.chomp.capitalize
   end
   # return the array of students
   return students
@@ -46,11 +32,33 @@ end
 
 #finally, we print the total number of students 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  names.size == 1 ? puts("Overall, we have #{names.count} great student") : puts("Overall, we have #{names.count} great students")
 end
 
+def interactive_menu
+  students = []
+  # step 4. back to step 1, print the menu
+  loop do
+    # step 1. print menu
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+    # step 2. ask what the user wants to do
+    selection = gets.chomp
+    # step 3. de what the user has asked 
+    case selection
+    when "1"
+      students = input_students(students)
+    when "2"
+      print_header
+      print(students)
+      print_footer(students)
+    when "9"
+      exit # this will cause the program to terminate
+    else
+      "Input error, try again"
+    end
+  end
+end
 #nothing happens until we call the methods
-students = input_students
-print_header
-print(students)
-print_footer(students)
+interactive_menu
